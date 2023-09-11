@@ -57,130 +57,17 @@
     <input type="text" id="password" th:field="*{password}" name="password">
 
 <br>
-    <label for="roles">Roles</label>
-    <div id="roles">
-        <label>
-            <input type="radio" name="roles" value="ROLE_USER"> User
-        </label>
-        <br>
-        <label>
-            <input type="radio" name="roles" value="ROLE_ADMIN"> Admin
-        </label>
-    </div>
+    <label><input type="checkbox" name="roles" value="ROLE_ADMIN"> Администратор</label><br>
+    <label><input type="checkbox" name="roles" value="ROLE_USER"> Пользователь</label><br>
 
     <br>
     <input type="submit" value="Add new user">
     <br>
 </form>
 
-
-
-
-<!--<label for="roles">Roles</label>-->
-<!--<div id="roles">-->
-<!--    <label>-->
-<!--        <input type="checkbox" name="roles" value="ROLE_USER"> User-->
-<!--    </label>-->
-<!--    <br>-->
-<!--    <label>-->
-<!--        <input type="checkbox" name="roles" value="ROLE_ADMIN"> Admin-->
-<!--    </label>-->
-<!--</div>-->
-<!--<label for="roles">Roles</label>-->
-<!--<select id="roles" name="roles" multiple="multiple">-->
-<!--    <option value="ROLE_USER">User</option>-->
-<!--    <option value="ROLE_ADMIN">Admin</option>-->
-<!--</select>-->
 <br>
 <a href="/logout">
     <button style="font-size: 18px; padding: 12px 6px;  color: blue;">Выйти</button>
 </a>
 </body>
 </html>
-
-
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Add new user</title>-->
-<!--    <style>-->
-<!--        body {-->
-<!--            font-size: 18px; /* Увеличение размера шрифта */-->
-<!--        }-->
-
-<!--        label {-->
-<!--            font-size: 16px; /* Увеличение размера шрифта меток */-->
-<!--        }-->
-
-<!--        input[type="text"] {-->
-<!--            width: 100%;-->
-<!--            padding: 10px;-->
-<!--            margin-bottom: 10px;-->
-<!--            font-size: 16px; /* Увеличение размера шрифта полей ввода */-->
-<!--        }-->
-
-<!--        input[type="submit"] {-->
-<!--            background-color: #007bff;-->
-<!--            color: #fff;-->
-<!--            padding: 15px 20px;-->
-<!--            font-size: 18px; /* Увеличение размера шрифта кнопки */-->
-<!--            border: none;-->
-<!--            cursor: pointer;-->
-<!--        }-->
-
-<!--        input[type="submit"]:hover {-->
-<!--            background-color: #0056b3;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--<form th:action="@{/admin}" th:method="POST" th:object="${user}">-->
-<!--    <label for="name">Name</label>-->
-<!--    <input type="text" id="name" th:field="*{name}">-->
-<!--    <br>-->
-<!--    <label for="surname">Surname</label>-->
-<!--    <input type="text" id="surname" th:field="*{surname}">-->
-<!--    <br>-->
-<!--    <label for="age">Age</label>-->
-<!--    <input type="text" id="age" th:field="*{age}">-->
-<!--    <br>-->
-<!--    <input type="submit" value="Add new user">-->
-<!--</form>-->
-<!--<br>-->
-<!--<a href="/logout">Выйти</a>-->
-<!--</body>-->
-<!--</html>-->
-
-
-
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Add new user</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<form th:action="@{/admin}" th:method="POST" th:object="${user}">-->
-<!--    <label for="name">Name</label>-->
-<!--    <input type="text" id="name" th:field="*{name}">-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <label for="surname">Surname</label>-->
-<!--    <input type="text" id="surname" th:field="*{surname}">-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <label for="age">Age</label>-->
-<!--    <input type="text" id="age" th:field="*{age}">-->
-<!--    <br>-->
-<!--    <br>-->
-<!--    <input type="submit" value="Add new user">-->
-<!--</form>-->
-<!--<br>-->
-<!--<a href="/logout">Выйти</a>-->
-<!--</body>-->
-<!--</html>-->

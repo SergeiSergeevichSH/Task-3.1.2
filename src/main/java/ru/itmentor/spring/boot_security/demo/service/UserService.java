@@ -1,61 +1,28 @@
 package ru.itmentor.spring.boot_security.demo.service;
 
-
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ru.itmentor.spring.boot_security.demo.model.User;
-import ru.itmentor.spring.boot_security.demo.repository.UserRepository;
-import ru.itmentor.spring.boot_security.demo.repository.UserRole;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
+public interface UserService {
 
-@Service
-@Transactional
-public class UserService {
-    private final UserRepository usersRepository;
-    private final UserRole userRole;
+    List<User> getAllUsers();
 
-    @Autowired
-    public UserService(UserRepository usersRepository, UserRole userRole) {
-        this.usersRepository = usersRepository;
-        this.userRole = userRole;
-    }
+    User getById(int id);
 
-    public List<User> getAllUsers() {
-        return usersRepository.findAll();
-    }
+    User getByUsername(String username);
 
-    public User getById(int id) {
-        User user = userRole.findByIdWithRoles(id);
-        if (user != null) {
-            Hibernate.initialize(user.getRoles());
-        }
-        return user;
-    }
+    void save(User user);
 
-    public User getByUsername(String username) {
-        return (User) usersRepository.getUserByUsername(username);
-    }
+    void delete(int id);
 
-    public void save(User user) {
-        usersRepository.save(user);
-    }
+    User createUser(
+            String name,
+            String username,
+            int age,
+            String surname,
+            String password,
+            List<String> roleNames);
 
-    public void update(User user) {
-        Optional<User> existingUser = usersRepository.findById(user.getId());
-        existingUser.ifPresent(userToUpdate -> {
-            userToUpdate.setUsername(user.getUsername());
-            userToUpdate.setPassword(user.getPassword());
-            userToUpdate.setRoles(user.getRoles());
-            usersRepository.save(userToUpdate);
-        });
-    }
-
-    public void delete(int id) {
-        usersRepository.deleteById(id);
-    }
+    void update(User user);
 }

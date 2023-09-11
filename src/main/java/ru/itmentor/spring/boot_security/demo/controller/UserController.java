@@ -12,18 +12,18 @@ import ru.itmentor.spring.boot_security.demo.service.UserService;
 @Controller
 @RequestMapping("user")
 public class UserController {
-    private final UserService userServiceImpl;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserService userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("")
     public String showUserInfo(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User user = userServiceImpl.getByUsername(username);
+        User user = userService.getByUsername(username);
         model.addAttribute("user", user);
         return "users/user-info";
     }

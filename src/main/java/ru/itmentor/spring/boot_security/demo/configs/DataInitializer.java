@@ -1,29 +1,31 @@
 package ru.itmentor.spring.boot_security.demo.configs;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.itmentor.spring.boot_security.demo.repository.UserRole;
+//import ru.itmentor.spring.boot_security.demo.repository.UserRole;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.model.Role;
-import ru.itmentor.spring.boot_security.demo.service.UserService;
+import ru.itmentor.spring.boot_security.demo.service.UserServiceImpl;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 
 @Component
 public class DataInitializer implements CommandLineRunner {
 
-    private UserService userService;
-    private UserRole userRole;
-    private PasswordEncoder passwordEncoder;
+    private final UserServiceImpl userService;
+    private final PasswordEncoder passwordEncoder;
+    private final EntityManager entityManager;
 
     @Autowired
-    public DataInitializer(UserService userService, UserRole userRole, PasswordEncoder passwordEncoder) {
+    public DataInitializer(UserServiceImpl userService, PasswordEncoder passwordEncoder, EntityManager entityManager) {
         this.userService = userService;
-        this.userRole = userRole;
         this.passwordEncoder = passwordEncoder;
+        this.entityManager = entityManager;
     }
 
     @Transactional
@@ -31,10 +33,12 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
 
         Role roleUser = new Role("ROLE_USER");
-        userRole.save(roleUser);
-
         Role roleAdmin = new Role("ROLE_ADMIN");
-        userRole.save(roleAdmin);
+
+        Session session = entityManager.unwrap(Session.class);
+
+        session.save(roleUser);
+        session.save(roleAdmin);
 
         User user1 = new User();
         user1.setName("Антон");
@@ -57,3 +61,5 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 }
+
+

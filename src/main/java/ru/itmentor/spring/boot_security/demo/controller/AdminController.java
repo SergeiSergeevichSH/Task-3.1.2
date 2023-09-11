@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.model.User;
-import ru.itmentor.spring.boot_security.demo.model.Role;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("admin")
@@ -58,29 +59,9 @@ public class AdminController {
             @RequestParam("age") int age,
             @RequestParam("surname") String surname,
             @RequestParam("password") String password,
-            @RequestParam("roles") String role
+            @RequestParam("roles") List<String> roles
     ) {
-        // Создайте объект User на основе полученных параметров
-        User user = new User();
-        user.setUsername(username);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setAge(age);
-        user.setPassword(passwordEncoder.encode(password));
-        System.out.println(user);
-
-        // Добавьте выбранные роли, если они были выбраны
-        if (role.equals("ROLE_USER")) {
-            Role userRole = new Role();
-            userRole.setRole("ROLE_USER");
-            userRole.setUser(user);
-            user.addRole(userRole);
-        } else if (role.equals("ROLE_ADMIN")) {
-            Role adminRole = new Role();
-            adminRole.setRole("ROLE_ADMIN");
-            adminRole.setUser(user);
-            user.addRole(adminRole);
-        }
+        User user = userService.createUser(name, username, age, surname, password, roles);
         userService.save(user);
         return "redirect:/admin";
     }
