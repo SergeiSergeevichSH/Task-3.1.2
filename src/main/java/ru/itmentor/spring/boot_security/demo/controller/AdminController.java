@@ -54,14 +54,13 @@ public class AdminController {
 
     @PostMapping("")
     public String addNewUser(
-            @RequestParam("name") String name,
-            @RequestParam("username") String username,
-            @RequestParam("age") int age,
-            @RequestParam("surname") String surname,
-            @RequestParam("password") String password,
-            @RequestParam("roles") List<String> roles
+            @ModelAttribute("user") User user,
+            @RequestParam("roles") List<String> roles,
+            @RequestParam("password") String password
     ) {
-        User user = userService.createUser(name, username, age, surname, password, roles);
+
+        User user1 = userService.createUser(user, roles, password);
+
         userService.save(user);
         return "redirect:/admin";
     }

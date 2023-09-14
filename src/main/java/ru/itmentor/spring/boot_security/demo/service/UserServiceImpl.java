@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.itmentor.spring.boot_security.demo.model.Role;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.repository.UserRepository;
-//import ru.itmentor.spring.boot_security.demo.repository.UserRole;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -46,6 +45,7 @@ public class UserServiceImpl implements UserService {
         return (User) usersRepository.getUserByUsername(username);
     }
 
+
     @Override
     public void save(User user) {
         usersRepository.save(user);
@@ -68,22 +68,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(
-            String name,
-            String username,
-            int age, String surname,
-            String password,
-            List<String> roleNames) {
+    public User createUser(User user, List<String> roleNames, String password ) {
 
-        User user = new User();
-        user.setUsername(username);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setAge(age);
+        // Обработка пароля
         user.setPassword(passwordEncoder.encode(password));
 
+        // Обработка ролей
         Set<Role> userRoles = new HashSet<>();
-
         for (String roleName : roleNames) {
             Role role = new Role();
             role.setRole(roleName);
@@ -92,6 +83,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRoles(userRoles);
+
         return user;
     }
 }
