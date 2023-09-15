@@ -16,8 +16,5 @@ public interface UserService {
 
     void delete(int id);
 
-    User createUser(
-            User user, List<String> roleNames, String password);
-
     void update(User user);
 }

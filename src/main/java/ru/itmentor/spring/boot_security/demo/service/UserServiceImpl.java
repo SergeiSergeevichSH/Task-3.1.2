@@ -9,7 +9,7 @@ import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.repository.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -45,9 +45,15 @@ public class UserServiceImpl implements UserService {
         return (User) usersRepository.getUserByUsername(username);
     }
 
-
     @Override
     public void save(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        Set<Role> userRoles = user.getRoles();
+        List<String> roleNames = new ArrayList<>();
+        for (Role role : userRoles) {
+            roleNames.add(role.getRole());
+        }
+        user.setRoles(userRoles);
         usersRepository.save(user);
     }
 
@@ -67,23 +73,4 @@ public class UserServiceImpl implements UserService {
         usersRepository.deleteById(id);
     }
 
-    @Override
-    public User createUser(User user, List<String> roleNames, String password ) {
-
-        // Обработка пароля
-        user.setPassword(passwordEncoder.encode(password));
-
-        // Обработка ролей
-        Set<Role> userRoles = new HashSet<>();
-        for (String roleName : roleNames) {
-            Role role = new Role();
-            role.setRole(roleName);
-            role.setUser(user);
-            userRoles.add(role);
-        }
-
-        user.setRoles(userRoles);
-
-        return user;
-    }
 }

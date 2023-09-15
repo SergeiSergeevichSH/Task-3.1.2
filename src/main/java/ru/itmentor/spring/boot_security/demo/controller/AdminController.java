@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.service.UserService;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("admin")
 public class AdminController {
@@ -54,16 +52,11 @@ public class AdminController {
 
     @PostMapping("")
     public String addNewUser(
-            @ModelAttribute("user") User user,
-            @RequestParam("roles") List<String> roles,
-            @RequestParam("password") String password
-    ) {
-
-        User user1 = userService.createUser(user, roles, password);
-
+            @ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/admin";
     }
+
 
     @DeleteMapping("{id}")
     public String deleteUser(@PathVariable("id") int id) {
