@@ -4,11 +4,12 @@ package ru.itmentor.spring.boot_security.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itmentor.spring.boot_security.demo.model.Role;
 import ru.itmentor.spring.boot_security.demo.model.User;
 import ru.itmentor.spring.boot_security.demo.repository.UserRepository;
 
-import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +17,7 @@ import java.util.Set;
 
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
     private final UserRepository usersRepository;
 
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
         return (User) usersRepository.getUserByUsername(username);
     }
 
+    @Transactional
     @Override
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
         usersRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void update(User user) {
         Optional<User> existingUser = usersRepository.findById(user.getId());
@@ -68,6 +71,7 @@ public class UserServiceImpl implements UserService {
         });
     }
 
+    @Transactional
     @Override
     public void delete(int id) {
         usersRepository.deleteById(id);
